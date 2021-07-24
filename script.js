@@ -1,68 +1,68 @@
 'use strict' ;
 
-function Person () {
+const PERMISSION_GANDER = [ 'male' , 'female' , 'non-binary' , 'transgender' , 'intersex' , 'n/a' ] ;
 
-    if ( !new.target ) return ;
+function secretFunctionName ( currentValue ) {
+    let value ;
+    return function ( currentValue ) { 
+        if ( currentValue !== undefined ) value = currentValue.trim() ;
+        return value ;
+    } ;
+}
+const _name = secretFunctionName () ;
 
-    const PERMISSION_GANDER = [ 'male' , 'female' , 'non-binary' , 'transgender' , 'intersex' , 'n/a' ] ;
+function secretFunctionAge ( currentValue ) {
+    let value ;
+    return function ( currentValue ) { 
+        if ( currentValue !== undefined ) {
+            currentValue = parseInt ( currentValue ) ;
+            if( currentValue > 0 && currentValue <= 120 ) {
+                value = currentValue ;
+            }
+        } 
+        return value ;
+    } ;
+}
+const _age = secretFunctionAge () ;    
 
-    function secretFunctionName ( currentValue ) {
-        let value ;
-        return function ( currentValue ) { 
-            if ( currentValue !== undefined ) value = currentValue.trim() ;
-            return value ;
-        } ;
-    }
-    const _name = secretFunctionName () ;
+function secretFunctionGander ( currentValue ) {
+    let value ;
+    return function ( currentValue ) { 
+        if ( currentValue !== undefined ) {
+            currentValue = currentValue.trim().toLowerCase() ;
+            if( PERMISSION_GANDER.includes( currentValue ) ) value = currentValue ;
+        } 
+        return value ;
+    } ;
+}
+const _gander = secretFunctionGander () ;
 
-    function secretFunctionAge ( currentValue ) {
-        let value ;
-        return function ( currentValue ) { 
-            if ( currentValue !== undefined ) {
-                currentValue = parseInt ( currentValue ) ;
-                if( currentValue > 0 && currentValue <= 120 ) {
-                    value = currentValue ;
-                }
-            } 
-            return value ;
-        } ;
-    }
-    const _age = secretFunctionAge () ;
+function Person () {                            //инициализируем конструктор
 
-    function secretFunctionGander ( currentValue ) {
-        let value ;
-        return function ( currentValue ) { 
-            if ( currentValue !== undefined ) {
-                currentValue = currentValue.trim().toLowerCase() ;
-                if( PERMISSION_GANDER.includes( currentValue ) ) value = currentValue ;
-            } 
-            return value ;
-        } ;
-    }
-    const _gander = secretFunctionGander () ;
-
-    Object.defineProperties ( this , {
-        'name' : {
-            get : function () { return _name () } ,
-            set : function ( value ) { _name ( value ) } ,
-            enumerable : false ,
-            configurable : false
-        } ,
-        'age' : {
-            get : function () { return _age () } ,
-            set : function ( value ) { _age ( value ) } ,
-            enumerable : false ,
-            configurable : false
-        } ,
-        'gander' : {
-            get : function () { return _gander () } ,
-            set : function ( value ) { _gander ( value ) } ,
-            enumerable : false ,
-            configurable : false
-        }
-    } ) ;
+    if ( !new.target ) return ;  
 
 }
+Object.defineProperties ( Person.prototype , {  //инициализируем прототип
+    'name' : {
+        get : function () { return _name () } ,
+        set : function ( value ) { _name ( value ) } ,
+        enumerable : false ,
+        configurable : false
+    } ,
+    'age' : {
+        get : function () { return _age () } ,
+        set : function ( value ) { _age ( value ) } ,
+        enumerable : false ,
+        configurable : false
+    } ,
+    'gander' : {
+        get : function () { return _gander () } ,
+        set : function ( value ) { _gander ( value ) } ,
+        enumerable : false ,
+        configurable : false
+    }
+} ) ;
+
 
 const newPerson = new Person () ; 
 
