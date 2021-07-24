@@ -65,7 +65,7 @@ function Person ( name , age , gander ) {
     this.age = age ;
     this.gander = gander ;
 
-}                            //инициализируем конструктор
+}
 
 const newPerson = new Person ( ' bob' , 120 , ' Male' ) ; 
 console.log ( newPerson.name ) ;
